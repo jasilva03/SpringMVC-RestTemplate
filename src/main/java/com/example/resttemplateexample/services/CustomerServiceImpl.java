@@ -3,6 +3,7 @@ package com.example.resttemplateexample.services;
 import com.example.resttemplateexample.domain.Customer;
 import com.example.resttemplateexample.domain.Customers;
 import com.example.resttemplateexample.request.CustomerRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,6 +14,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     RestTemplate restTemplate;
 
+    @Value("${external.api.fruit.shop}")
+    private String externalAPI;
+
     public CustomerServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
@@ -20,7 +24,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> getAllCustomers() {
 
-        Customers customers = restTemplate.getForObject("https://api.predic8.de:443/shop/customers/", Customers.class);
+        Customers customers = restTemplate.getForObject(externalAPI, Customers.class);
         return customers.getCustomers();
 
     }
@@ -28,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getCustomerById(String id) {
 
-        Customer customer = restTemplate.getForObject("https://api.predic8.de:443/shop/customers/" + id, Customer.class);
+        Customer customer = restTemplate.getForObject(externalAPI + id, Customer.class);
         return customer;
 
     }
@@ -36,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer createCustomer(CustomerRequest customerRequest) {
 
-        Customer createdCustomer = restTemplate.postForObject("https://api.predic8.de:443/shop/customers/", customerRequest, Customer.class);
+        Customer createdCustomer = restTemplate.postForObject(externalAPI, customerRequest, Customer.class);
         return createdCustomer;
 
     }
@@ -44,14 +48,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void updateCustomer(String id, CustomerRequest customerRequest) {
 
-        restTemplate.put("https://api.predic8.de:443/shop/customers/" + id, customerRequest);
+        restTemplate.put(externalAPI + id, customerRequest);
 
     }
 
     @Override
     public void deleteCustomer(String id) {
 
-        restTemplate.delete("https://api.predic8.de:443/shop/customers/" + id);
+        restTemplate.delete(externalAPI + id);
 
     }
 

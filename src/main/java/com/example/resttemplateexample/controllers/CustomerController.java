@@ -3,6 +3,7 @@ package com.example.resttemplateexample.controllers;
 import com.example.resttemplateexample.domain.Customer;
 import com.example.resttemplateexample.request.CustomerRequest;
 import com.example.resttemplateexample.services.CustomerService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +26,8 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable("id") String id) {
+    public Customer getCustomerByIdUsingPathVariable(
+            @PathVariable("id") String id) {
 
         return customerService.getCustomerById(id);
 

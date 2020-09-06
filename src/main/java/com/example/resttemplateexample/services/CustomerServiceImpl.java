@@ -4,6 +4,7 @@ import com.example.resttemplateexample.domain.Customer;
 import com.example.resttemplateexample.domain.Customers;
 import com.example.resttemplateexample.request.CustomerRequest;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,7 +15,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     RestTemplate restTemplate;
 
-    @Value("${external.api.fruit.shop}")
+    @Value("${external.api.fruit.shop.customers}")
     private String externalAPI;
 
     public CustomerServiceImpl(RestTemplate restTemplate) {
